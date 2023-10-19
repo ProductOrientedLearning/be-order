@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    database: postgresql
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${DATABASE_NAME:m_order}}
+    username: ${DATABASE_USERNAME:tribal}
+    password: ${DATABASE_PASSWORD:Tribal22}
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 2
+      connection-timeout: 20000
+      max-lifetime: 120000
+      pool-name: OrderEshopPolHikari
+
+
+url:
+  product-service: ${PRODUCT_SERVICE_URL:http://localhost:8081}/eshop-product
+
+
+header:
+  security:
+    key-token: x-access-token
+    value-token: ackoilkadjfoajad12

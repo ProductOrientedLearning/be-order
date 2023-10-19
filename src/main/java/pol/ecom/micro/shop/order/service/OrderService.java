@@ -1,4 +1,4 @@
-package pol.eom.micro.shop.order.dto.request;
+package pol.ecom.micro.shop.order.service;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,9 +22,9 @@ package pol.eom.micro.shop.order.dto.request;
  */
 
 
-import lombok.Data;
+import pol.ecom.micro.shop.order.dto.request.OrderRequest;
+import pol.ecom.micro.shop.order.dto.response.OrderResponse;
 
-@Data
-public class OrderRequest {
-    private long idProduct;
+public interface OrderService {
+    OrderResponse crateOrder(OrderRequest request);
 }

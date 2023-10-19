@@ -1,4 +1,4 @@
-package pol.eom.micro.shop.order.service.impl;
+package pol.ecom.micro.shop.order.dto.request;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,27 +22,10 @@ package pol.eom.micro.shop.order.service.impl;
  */
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import pol.ecom.micro.shop.lib.dto.response.ProductDto;
-import pol.ecom.micro.shop.lib.integrate.rest.ProductIntegrate;
-import pol.eom.micro.shop.order.dto.request.OrderRequest;
-import pol.eom.micro.shop.order.dto.response.OrderResponse;
-import pol.eom.micro.shop.order.service.OrderService;
+import lombok.Data;
 
-@Service
-public class OrderServiceImpl implements OrderService {
-
-    @Autowired
-    private ProductIntegrate productIntegrate;
-
-    @Override
-    public OrderResponse crateOrder(OrderRequest request) {
-        ProductDto productDto = productIntegrate.getProductById(request.getIdProduct());
-
-        return OrderResponse.builder()
-                .id(1)
-                .total(100F)
-                .build();
-    }
+@Data
+public class OrderRequest {
+    private long idProduct;
+    private int numProduct;
 }

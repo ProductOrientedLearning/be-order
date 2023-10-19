@@ -1,4 +1,4 @@
-package pol.eom.micro.shop.order;
+package pol.ecom.micro.shop.order;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "pol.ecom.micro.shop")
+@ComponentScan("pol.ecom.micro")
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);

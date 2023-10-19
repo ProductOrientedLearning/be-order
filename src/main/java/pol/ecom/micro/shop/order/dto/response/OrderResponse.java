@@ -1,4 +1,4 @@
-package pol.eom.micro.shop.order.service;
+package pol.ecom.micro.shop.order.dto.response;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,9 +22,16 @@ package pol.eom.micro.shop.order.service;
  */
 
 
-import pol.eom.micro.shop.order.dto.request.OrderRequest;
-import pol.eom.micro.shop.order.dto.response.OrderResponse;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public interface OrderService {
-    OrderResponse crateOrder(OrderRequest request);
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderResponse {
+    private int id;
+    private double total;
 }

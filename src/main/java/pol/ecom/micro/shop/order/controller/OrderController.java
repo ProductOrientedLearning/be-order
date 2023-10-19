@@ -1,4 +1,4 @@
-package pol.eom.micro.shop.order.controller;
+package pol.ecom.micro.shop.order.controller;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -29,10 +29,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.EntityResponse;
-import pol.eom.micro.shop.order.dto.request.OrderRequest;
-import pol.eom.micro.shop.order.dto.response.OrderResponse;
-import pol.eom.micro.shop.order.service.OrderService;
+import pol.ecom.micro.shop.order.dto.request.OrderRequest;
+import pol.ecom.micro.shop.order.dto.response.OrderResponse;
+import pol.ecom.micro.shop.order.service.OrderService;
 
 @RestController
 @RequestMapping(path = "/api/order", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +40,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest request) {
         return new ResponseEntity<>(orderService.crateOrder(request), HttpStatus.CREATED);
     }

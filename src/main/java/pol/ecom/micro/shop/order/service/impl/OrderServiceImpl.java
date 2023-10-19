@@ -44,6 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse crateOrder(OrderRequest request) {
+        // get info of product from product-service.
         ProductDto productDto = productIntegrate.getProductById(request.getIdProduct());
         if(ObjectUtils.isEmpty(productDto)) {
             throw new ShopException(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR.getCode(), messageUtil.getMessage(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR));

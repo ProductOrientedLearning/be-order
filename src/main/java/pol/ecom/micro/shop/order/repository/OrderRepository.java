@@ -1,4 +1,4 @@
-package pol.ecom.micro.shop.order.service.impl;
+package pol.ecom.micro.shop.order.repository;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,29 +22,10 @@ package pol.ecom.micro.shop.order.service.impl;
  */
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pol.ecom.micro.shop.order.dto.request.OrderRequest;
-import pol.ecom.micro.shop.order.dto.response.OrderResponse;
-import pol.ecom.micro.shop.order.mapper.dto.OrderDtoMapper;
-import pol.ecom.micro.shop.order.mapper.enity.OrderMapper;
-import pol.ecom.micro.shop.order.repository.OrderRepository;
-import pol.ecom.micro.shop.order.service.OrderService;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import pol.ecom.micro.shop.order.entity.Order;
 
-@Service
-public class OrderServiceImpl implements OrderService {
-
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private OrderDtoMapper orderDtoMapper;
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Transactional
-    @Override
-    public OrderResponse crateOrder(OrderRequest request) {
-        return orderDtoMapper.toDto(orderRepository.save(orderMapper.toEntity(request)));
-    }
+@Repository
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }

@@ -32,6 +32,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponse {
-    private int id;
+    private long id;
     private double total;
 }

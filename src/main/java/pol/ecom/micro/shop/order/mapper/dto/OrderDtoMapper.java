@@ -1,4 +1,4 @@
-package pol.ecom.micro.shop.order.service.impl;
+package pol.ecom.micro.shop.order.mapper.dto;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,29 +22,33 @@ package pol.ecom.micro.shop.order.service.impl;
  */
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pol.ecom.micro.shop.order.dto.request.OrderRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import pol.ecom.micro.shop.lib.mapper.DtoMapper;
 import pol.ecom.micro.shop.order.dto.response.OrderResponse;
-import pol.ecom.micro.shop.order.mapper.dto.OrderDtoMapper;
-import pol.ecom.micro.shop.order.mapper.enity.OrderMapper;
-import pol.ecom.micro.shop.order.repository.OrderRepository;
-import pol.ecom.micro.shop.order.service.OrderService;
+import pol.ecom.micro.shop.order.entity.Order;
 
-@Service
-public class OrderServiceImpl implements OrderService {
+import java.util.ArrayList;
+import java.util.List;
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private OrderDtoMapper orderDtoMapper;
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Transactional
+@Component
+public class OrderDtoMapper implements DtoMapper<Order, OrderResponse> {
     @Override
-    public OrderResponse crateOrder(OrderRequest request) {
-        return orderDtoMapper.toDto(orderRepository.save(orderMapper.toEntity(request)));
+    public OrderResponse toDto(Order entity) {
+        return OrderResponse.builder()
+                .id(entity.getId())
+                .total(entity.getTotal())
+                .build();
+    }
+
+    @Override
+    public List<OrderResponse> toListDto(List<Order> entities) {
+        List<OrderResponse> dtos = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(entities)) {
+            for(Order entity: entities) {
+                dtos.add(toDto(entity));
+            }
+        }
+        return dtos;
     }
 }

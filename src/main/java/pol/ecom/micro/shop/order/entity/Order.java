@@ -1,4 +1,4 @@
-package pol.ecom.micro.shop.order.service.impl;
+package pol.ecom.micro.shop.order.entity;
 /*
  * This is course Microservice Product Oriented
  * MIT No Attribution
@@ -22,29 +22,33 @@ package pol.ecom.micro.shop.order.service.impl;
  */
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import pol.ecom.micro.shop.order.dto.request.OrderRequest;
-import pol.ecom.micro.shop.order.dto.response.OrderResponse;
-import pol.ecom.micro.shop.order.mapper.dto.OrderDtoMapper;
-import pol.ecom.micro.shop.order.mapper.enity.OrderMapper;
-import pol.ecom.micro.shop.order.repository.OrderRepository;
-import pol.ecom.micro.shop.order.service.OrderService;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Service
-public class OrderServiceImpl implements OrderService {
+import java.io.Serial;
+import java.io.Serializable;
 
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private OrderDtoMapper orderDtoMapper;
-    @Autowired
-    private OrderRepository orderRepository;
+@Entity
+@Table(name = "m_order")
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Order implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    @Transactional
-    @Override
-    public OrderResponse crateOrder(OrderRequest request) {
-        return orderDtoMapper.toDto(orderRepository.save(orderMapper.toEntity(request)));
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
+    @Column(name = "id_product")
+    private long idProduct;
+
+    @Column(name = "total")
+    private Double total;
 }

@@ -37,21 +37,28 @@ import pol.ecom.micro.shop.order.entity.Order;
 @Component
 public class OrderMapper implements EntityMapper<OrderRequest, Order> {
 
- @Autowired
- private ProductIntegrate productIntegrate;
- @Autowired
- private MessageUtil messageUtil;
+    @Autowired
+    private ProductIntegrate productIntegrate;
+    @Autowired
+    private MessageUtil messageUtil;
 
- @Override
- public Order toEntity(OrderRequest request) {
-  ProductDto productDto = productIntegrate.getProductById(request.getIdProduct());
-  if(ObjectUtils.isEmpty(productDto)) {
-   throw new ShopException(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR.getCode(), messageUtil.getMessage(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR));
-  }
-  double total = request.getNumProduct() * productDto.getPrice();
-  return Order.builder()
-          .idProduct(productDto.getId())
-          .total(total)
-          .build();
- }
+    @Override
+    public Order toEntity(OrderRequest request) throws ShopException {
+        ProductDto productDto = null;
+        try {
+            productDto = productIntegrate.getProductById(request.getIdProduct());
+        }catch (Exception ex) {
+            throw new ShopException(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR.getCode(), messageUtil.getMessage(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR));
+        }
+        if (ObjectUtils.isEmpty(productDto)) {
+            throw new ShopException(MessageCode.MESSAGE_PRODUCT_NOT_FOUND.getCode(), messageUtil.getMessage(MessageCode.MESSAGE_PRODUCT_NOT_FOUND));
+        }
+         double total = request.getNumProduct() * productDto.getPrice();
+         return Order.builder()
+                 .idProduct(productDto.getId())
+                 .total(total)
+                 .build();
+
+    }
+
 }

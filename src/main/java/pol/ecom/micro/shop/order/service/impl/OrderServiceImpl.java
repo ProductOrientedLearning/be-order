@@ -25,8 +25,12 @@ package pol.ecom.micro.shop.order.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pol.ecom.micro.shop.lib.constant.MessageCode;
+import pol.ecom.micro.shop.lib.exception.ShopException;
+import pol.ecom.micro.shop.lib.util.MessageUtil;
 import pol.ecom.micro.shop.order.dto.request.OrderRequest;
 import pol.ecom.micro.shop.order.dto.response.OrderResponse;
+import pol.ecom.micro.shop.order.entity.Order;
 import pol.ecom.micro.shop.order.mapper.dto.OrderDtoMapper;
 import pol.ecom.micro.shop.order.mapper.enity.OrderMapper;
 import pol.ecom.micro.shop.order.repository.OrderRepository;
@@ -41,10 +45,22 @@ public class OrderServiceImpl implements OrderService {
     private OrderDtoMapper orderDtoMapper;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private MessageUtil messageUtil;
 
     @Transactional
     @Override
     public OrderResponse crateOrder(OrderRequest request) {
-        return orderDtoMapper.toDto(orderRepository.save(orderMapper.toEntity(request)));
+        try {
+            Order order = orderMapper.toEntity(request);
+            return orderDtoMapper.toDto(orderRepository.save(order));
+        }catch (ShopException ex){
+            if(ex.getCode().equals(MessageCode.MESSAGE_PRODUCT_NOT_FOUND.getCode())) {
+                throw new ShopException(ex.getCode(), String.format(ex.getMessage(), request.getIdProduct()));
+            } else {
+                throw new ShopException(ex.getCode(), ex.getMessage());
+            }
+        }
+
     }
 }

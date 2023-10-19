@@ -22,6 +22,7 @@ package pol.ecom.micro.shop.order.mapper.enity;
  */
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -35,6 +36,7 @@ import pol.ecom.micro.shop.order.dto.request.OrderRequest;
 import pol.ecom.micro.shop.order.entity.Order;
 
 @Component
+@Slf4j
 public class OrderMapper implements EntityMapper<OrderRequest, Order> {
 
     @Autowired
@@ -48,6 +50,7 @@ public class OrderMapper implements EntityMapper<OrderRequest, Order> {
         try {
             productDto = productIntegrate.getProductById(request.getIdProduct());
         }catch (Exception ex) {
+            log.error("can not connect to product service");
             throw new ShopException(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR.getCode(), messageUtil.getMessage(MessageCode.MESSAGE_ERROR_SYSTEM_ERROR));
         }
         if (ObjectUtils.isEmpty(productDto)) {
